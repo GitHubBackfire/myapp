@@ -1,0 +1,21 @@
+<resources>
+    <string name="app_name">MyApp</string>
+    <string name="bookstore">书屋</string>
+    <string name="fiction">科幻星云</string>
+
+    <string name="tabFilm">电影</string>
+    <string name="tabBook">书籍</string>
+    <string name="tabDownload">下载</string>
+    <string name="tabSetting">设置</string>
+
+    <string name="category">分类</string>
+    <string name="time">时间</string>
+    <string name="tag">标签</string>
+
+    <string name="save_flow">启动流量节省方式</string>
+
+    <string name="clear_history">清除搜索历史</string>
+
+    <string name="click_to_search">点击搜索</string>
+
+</resources>

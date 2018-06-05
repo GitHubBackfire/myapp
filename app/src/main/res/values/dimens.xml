@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <dimen name="margin_small">8dp</dimen>
+    <dimen name="margin_normal">10dp</dimen>
+    <dimen name="margin_large">14dp</dimen>
+
+    <dimen name="spacing_normal">8dp</dimen>
+    <dimen name="spacing_micro">4dp</dimen>
+    <dimen name="padding_normal">16dp</dimen>
+    <dimen name="spacing_large">32dp</dimen>
+    <dimen name="spacing_xlarge">48dp</dimen>
+    <dimen name="spacing_huge">64dp</dimen>
+
+    <dimen name="top_container_height">80dp</dimen>
+    <dimen name="search_height">34dp</dimen>
+    <dimen name="search_icon_size">22dp</dimen>
+    <dimen name="choose_height">34dp</dimen>
+
+    <dimen name="category_height">38dp</dimen>
+
+    <dimen name="padding_bookstore">8dp</dimen>
+    <dimen name="buttons_text_size">12dp</dimen>
+
+    <dimen name="margin_left_right">10dp</dimen>
+
+    <dimen name="bottom_icon_size">26dp</dimen>
+
+    <!--text size-->
+    <dimen name="tab_text_size">14sp</dimen>
+    <dimen name="book_title_size">14sp</dimen>
+    <dimen name="choose_text_size">14dp</dimen>
+
+    <dimen name="tablayout_height">40dp</dimen>
+
+    <dimen name="item_height">60dp</dimen>
+    <dimen name="item_right_icon">36dp</dimen>
+
+</resources>

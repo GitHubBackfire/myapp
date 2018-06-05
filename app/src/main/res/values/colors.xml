@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#FF4081</color>
+
+    <color name="colorIndicator">#555555</color>
+    <color name="colorToolbar">#bc000000</color>
+    <color name="content_placeholder">#ffe0e0e0</color>
+    <color name="light_gray">#999999</color>
+
+    <color name="tab_back_before">#999999</color>
+    <color name="tab_back_after">#666666</color>
+    <color name="tab_indicator">#EE4A34</color>
+
+    <color name="button_choose_after">#FFFFFF</color>
+    <color name="button_choose_before">#999999</color>
+
+    <color name="color_default">#ffffff</color>
+    <color name="color_background">#f1f0f6</color>
+    <color name="color_text">#9b9b9b</color>
+
+    <color name="colorDefault">#ffffff</color>
+    <color name="colorBackground">#f1f0f6</color>
+    <color name="colorText">#9b9b9b</color>
+    <color name="colorTest">#9b9b9b</color>
+
+    <color name="colorSearchBack">#999999</color>
+    <color name="colorButtonsBack">#FFFFFF</color>
+
+    <color name="colorChooseBefore">#444444</color>
+    <color name="colorChooseAfter">#FFFFFF</color>
+
+
+
+
+</resources>

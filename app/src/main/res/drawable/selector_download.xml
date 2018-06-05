@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Non focused states -->
+    <item android:state_focused="false" android:state_selected="false" android:state_pressed="false" android:drawable="@drawable/icon_download_before" />
+    <item android:state_focused="false" android:state_selected="true" android:state_pressed="false" android:drawable="@drawable/icon_download_after" />
+    <!-- Focused states -->
+    <item android:state_focused="true" android:state_selected="false" android:state_pressed="false" android:drawable="@drawable/icon_download_after" />
+    <item android:state_focused="true" android:state_selected="true" android:state_pressed="false" android:drawable="@drawable/icon_download_after"  />
+    <!-- Pressed -->
+    <item android:state_selected="true" android:state_pressed="true" android:drawable="@drawable/icon_download_after"  />
+    <item android:state_pressed="true" android:drawable="@drawable/icon_download_after"  />
+</selector>
