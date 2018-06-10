@@ -143,7 +143,10 @@ public class FictionReaderFragment extends BaseFragment implements IBookFragment
         loading =false;
     }
 
+    @Override
+    public void getListError() {
 
+    }
 
 
     //无需实现

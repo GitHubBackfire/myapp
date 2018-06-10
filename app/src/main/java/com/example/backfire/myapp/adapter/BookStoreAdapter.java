@@ -41,9 +41,14 @@ public class BookStoreAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     private Context context;
 
     private MyOnItemClickListener myOnItemClickListener;
+    private MyOnItemLongClickListener myOnItemLongClickListener;
 
     public void setMyOnItemClickListener(MyOnItemClickListener listener) {
         myOnItemClickListener = listener;
+    }
+
+    public void setMyOnItemLongClickListener(MyOnItemLongClickListener listener){
+        myOnItemLongClickListener = listener;
     }
 
 
@@ -63,7 +68,7 @@ public class BookStoreAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         switch (viewType) {
             case TYPE_NORMAL:
-                return new BookStoreHolder(LayoutInflater.from(context).inflate(R.layout.item_bookstore, parent, false), myOnItemClickListener);
+                return new BookStoreHolder(LayoutInflater.from(context).inflate(R.layout.item_bookstore, parent, false), myOnItemClickListener, myOnItemLongClickListener);
             case TYPE_LOADING_MORE:
                 return new LoadingMoreHolder(LayoutInflater.from(context).inflate(R.layout.infinite_loading, parent, false));
 
@@ -171,16 +176,19 @@ public class BookStoreAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         }
     }
 
-    private static class BookStoreHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    private static class BookStoreHolder extends RecyclerView.ViewHolder implements View.OnClickListener , View.OnLongClickListener{
         BookstoreListImageView imageView;
         TextView tvTitle;
         LinearLayout linearLayout;
         MyOnItemClickListener listener;
+        MyOnItemLongClickListener longClickListener;
 
-        public BookStoreHolder(View itemView, MyOnItemClickListener listener) {
+        public BookStoreHolder(View itemView, MyOnItemClickListener listener, MyOnItemLongClickListener longClickListener) {
             super(itemView);
             this.listener = listener;
+            this.longClickListener = longClickListener;
             itemView.setOnClickListener(this);
+            itemView.setOnLongClickListener(this);
             imageView = itemView.findViewById(R.id.img_book);
             tvTitle = itemView.findViewById(R.id.tv_book);
             linearLayout = itemView.findViewById(R.id.lin_container);
@@ -192,10 +200,23 @@ public class BookStoreAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
                 listener.onItemClick(view, getLayoutPosition());
             }
         }
+
+        @Override
+        public boolean onLongClick(View view) {
+            if(longClickListener != null){
+                longClickListener.onItemLongClick(getLayoutPosition());
+            }
+            return  true;
+        }
     }
 
     public interface MyOnItemClickListener {
         void onItemClick(View view, int position);
+    }
+
+    public interface MyOnItemLongClickListener{
+        void onItemLongClick(int position);
+
     }
 
 

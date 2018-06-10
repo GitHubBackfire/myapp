@@ -9,6 +9,7 @@ import android.view.View;
 import com.example.backfire.myapp.fragment.BookStoreFragment;
 import com.example.backfire.myapp.fragment.FictionReaderFragment;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,19 +20,44 @@ import java.util.List;
  */
 
 public class ViewPageAdapter extends FragmentPagerAdapter {
-    private String[] titles;
-    private ArrayList<Fragment> fragments;
-    public ViewPageAdapter(FragmentManager fm) {
-        super(fm);
+    //length >= 2
+    private String[] titles = new String[]{};
+    private List<Fragment> fragmentList;
+
+    public ViewPageAdapter(FragmentManager fragmentManager) {
+        super(fragmentManager);
+    }
+
+    public ViewPageAdapter(FragmentManager fragmentManager, String[] titles) {
+        super(fragmentManager);
+        this.titles = titles;
+    }
+
+    public ViewPageAdapter(FragmentManager fragmentManager, String[] titles, List<Fragment> fragmentList) {
+        super(fragmentManager);
+        this.titles = titles;
+        this.fragmentList = fragmentList;
     }
 
     @Override
     public Fragment getItem(int position) {
-        return null;
+        /*if (position == 1) {
+            return new FictionReaderFragment();
+        } else {
+            return new BookStoreFragment();
+        }*/
+        return fragmentList.get(position);
     }
 
     @Override
     public int getCount() {
-        return 0;
+        return titles.length;
+    }
+
+    @Override
+    public CharSequence getPageTitle(int position) {
+        return titles[position];
+
     }
 }
+

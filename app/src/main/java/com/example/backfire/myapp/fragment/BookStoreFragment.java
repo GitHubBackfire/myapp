@@ -1,13 +1,16 @@
 package com.example.backfire.myapp.fragment;
 
 import android.content.Intent;
+import android.graphics.Canvas;
 import android.graphics.drawable.ColorDrawable;
+import android.icu.util.Calendar;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.format.Time;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +20,7 @@ import android.widget.PopupWindow;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.backfire.myapp.R;
 import com.example.backfire.myapp.activity.BookDetailWebActivity;
@@ -35,6 +39,7 @@ import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import rx.internal.operators.OperatorScan;
 
 /**
  * Created by backfire on 2017/9/30.
@@ -116,9 +121,25 @@ public class BookStoreFragment extends BaseFragment implements IBookFragment, Vi
         initialDate();
         initialView();
         loadButtonDate();
-        loadDateData("2017/11");
+        getCurrentDate();
+        loadDateData(getCurrentDate());
 
     }
+
+    private String getCurrentDate(){
+        int year;
+        int month;
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
+            Calendar calendar = null;
+            calendar = Calendar.getInstance();
+            year = calendar.get(Calendar.YEAR);
+            month = calendar.get(Calendar.MONTH);
+        }else{
+            return "2018/1";
+        }
+        return year+"/"+month;
+    }
+
 
     @Override
     public void onPause() {
@@ -149,6 +170,12 @@ public class BookStoreFragment extends BaseFragment implements IBookFragment, Vi
                 intent.putExtra(StaticUtil.BOOK_DETAIL_URL, bookStoreAdapter.getBookBeanArrayList().get(position).getUrl());
                 getContext().startActivity(intent);
 
+            }
+        });
+        bookStoreAdapter.setMyOnItemLongClickListener(new BookStoreAdapter.MyOnItemLongClickListener() {
+            @Override
+            public void onItemLongClick( int position) {
+                Toast.makeText(getContext(),"长按"+position,Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -267,7 +294,6 @@ public class BookStoreFragment extends BaseFragment implements IBookFragment, Vi
 
 
     private void loadMoreData(int state) {
-        loading = false;
         currentPage++;
         switch (currentState) {
             case STATE_DATE:
@@ -311,7 +337,13 @@ public class BookStoreFragment extends BaseFragment implements IBookFragment, Vi
                 break;
         }*/
         bookStoreAdapter.addItems(bookBeanArrayList);
+        loading = false;
 
+    }
+
+    @Override
+    public void getListError() {
+        currentPage --;
     }
 
     /**

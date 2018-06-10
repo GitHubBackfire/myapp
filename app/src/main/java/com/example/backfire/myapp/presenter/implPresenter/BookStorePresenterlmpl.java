@@ -68,11 +68,16 @@ public class BookStorePresenterlmpl extends BasePresenterlmpl implements IBookst
                     @Override
                     public void onError(Throwable e) {
                         e.printStackTrace();
+                        iBookFragment.getListError();
                     }
 
                     @Override
                     public void onNext(Document document) {
-                        iBookFragment.updateList(documentToList(document));
+                        if(documentToList(document).size() >= 0){
+                            iBookFragment.updateList(documentToList(document));
+                        }else{
+                            iBookFragment.getListError();
+                        }
 
                     }
                 });

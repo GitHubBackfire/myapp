@@ -4,18 +4,14 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.FrameLayout;
 
 import com.example.backfire.myapp.R;
-import com.example.backfire.myapp.adapter.BookStoreAdapter;
 import com.example.backfire.myapp.adapter.ViewPageAdapter;
 
 import java.util.ArrayList;
@@ -41,16 +37,11 @@ public class BookFragment extends BaseFragment {
     private TabLayout.Tab one;
     private TabLayout.Tab two;
 
-    private BookStoreFragment bookStoreFragment;
-    private FictionReaderFragment fictionReaderFragment;
-    private List<Fragment> fragmentList = new ArrayList<>();
-
-
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-        view = inflater.inflate(R.layout.fragment_book, container, false);
+        view = inflater.inflate(R.layout.fragment_two_tab, container, false);
         ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
         ButterKnife.bind(this, view);
         initViewPager();
@@ -58,7 +49,7 @@ public class BookFragment extends BaseFragment {
     }
 
     private void initViewPager() {
-       /* String[] titles = new String[]{"书屋", "科幻"};
+        String[] titles =new String[]{"书屋","科幻"};
         ArrayList<Fragment> fragments = new ArrayList<>();
         fragments.add(new BookStoreFragment());
         fragments.add(new FictionReaderFragment());
@@ -66,7 +57,7 @@ public class BookFragment extends BaseFragment {
         viewPager.setAdapter(viewPageAdapter);
         tabLayout.setupWithViewPager(viewPager);
         one = tabLayout.getTabAt(0);
-        two = tabLayout.getTabAt(1);*/
+        two = tabLayout.getTabAt(1);
 
     }
 

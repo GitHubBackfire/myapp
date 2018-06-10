@@ -12,6 +12,7 @@ import java.util.Map;
 
 public interface IBookFragment extends IBaseFragment {
     void updateList(ArrayList<BookBean> bookBeanArrayList);
+    void getListError();
     void setDateList(ArrayList<DateBean> dateList);
     void setCategoryList(ArrayList<DateBean> categoryList);
     void setTagList(ArrayList<DateBean> tagList);

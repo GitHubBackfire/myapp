@@ -165,6 +165,11 @@ public class TextDetailActivity extends BaseActivity implements IBookFragment {
     }
 
     @Override
+    public void getListError() {
+
+    }
+
+    @Override
     public void setDateList(ArrayList<DateBean> dateList) {
 
     }

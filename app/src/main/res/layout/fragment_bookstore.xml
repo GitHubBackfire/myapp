@@ -79,9 +79,6 @@
                 android:background="@drawable/selector_choose_button"
                 />
 
-
-
-
         </LinearLayout>
 
     </LinearLayout>

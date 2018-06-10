@@ -42,5 +42,8 @@ public class StaticUtil {
     public static final int RESULT_CODE_SEARCH = 2;
     public static final String SEARCH_BOOK_NAME = "SEARCH_BOOK_NAME";
 
+    //本地
+    public static final String SUFFIX_EPUB = ".epub";
+
 
 }

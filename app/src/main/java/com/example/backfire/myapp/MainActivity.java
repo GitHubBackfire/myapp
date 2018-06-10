@@ -27,19 +27,25 @@ public class MainActivity extends AppCompatActivity {
     private FragmentTabHost mTabHost;
     private Fragment mFragment;
     private List<Tab> mTabs = new ArrayList<>();
+    private boolean isInitTab = false;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        if(null == mTabHost){
-            initTab();
+        if(savedInstanceState == null){
+            if(!isInitTab){
+                if(mTabHost == null){
+                    initTab();
+                }
+            }
         }
     }
 
 
     private void initTab() {
+        isInitTab = true;
         Tab tabBook = new Tab(R.string.tabBook,R.drawable.selector_book, BookFragment.class);
         Tab tabFilm = new Tab(R.string.tabFilm,R.drawable.selector_film, FilmFragment.class);
         Tab tabDownload = new Tab(R.string.tabDownload,R.drawable.selector_download, DownloadFragment.class);
@@ -85,5 +91,10 @@ public class MainActivity extends AppCompatActivity {
         void loadingStart();
 
         void loadingfinish();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
     }
 }

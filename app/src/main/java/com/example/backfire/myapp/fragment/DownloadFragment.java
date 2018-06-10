@@ -40,7 +40,7 @@ public class DownloadFragment extends BaseFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-        view = inflater.inflate(R.layout.fragment_download, container, false);
+        view = inflater.inflate(R.layout.fragment_two_tab, container, false);
         ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
         ButterKnife.bind(this, view);
         initViewPager();
@@ -49,7 +49,10 @@ public class DownloadFragment extends BaseFragment {
 
     private void initViewPager() {
         String[] mTitles = new String[]{"书籍", "电影"};
-        viewPageAdapter = new ViewPageAdapter(getChildFragmentManager(),mTitles);
+        ArrayList<Fragment> fragments = new ArrayList<>();
+        fragments.add(new DownloadBookFragment());
+        fragments.add(new DownloadFilmFragment());
+        viewPageAdapter = new ViewPageAdapter(getChildFragmentManager(),mTitles,fragments);
         viewPager.setAdapter(viewPageAdapter);
         tabLayout.setupWithViewPager(viewPager);
         one = tabLayout.getTabAt(0);
