@@ -15,14 +15,13 @@ import retrofit2.converter.scalars.ScalarsConverterFactory;
 
 public class ApiManager {
 
-    private static final String baseTest = "http://www.shuwu.mobi";
-    private static final String fictionUrl = "http://www.wcsfa.com";
+    private static final String BOOK_STORE_URL = "http://www.shuwu.mobi";
+    private static final String FICTION_TEXT_URL = "http://www.wcsfa.com";
 
     private static final Interceptor REWRITE_CHAHE_CONTROL_INTERCEPTOR = new Interceptor() {
         @Override
         public Response intercept(Chain chain) throws IOException {
             Response originalResponse = chain.proceed(chain.request());
-
             return null;
         }
     };
@@ -55,7 +54,7 @@ public class ApiManager {
             synchronized (bookMonitor) {
                 if (bookApi == null) {
                     bookApi = new Retrofit.Builder()
-                            .baseUrl(baseTest)
+                            .baseUrl(BOOK_STORE_URL)
                             .client(client)
                             .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
                             .addConverterFactory(ScalarsConverterFactory.create())
@@ -71,7 +70,7 @@ public class ApiManager {
             synchronized (fictionMonitor) {
                 if (fictionApi == null) {
                     fictionApi = new Retrofit.Builder()
-                            .baseUrl(fictionUrl)
+                            .baseUrl(FICTION_TEXT_URL)
                             .client(client)
                             .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
                             .addConverterFactory(ScalarsConverterFactory.create())

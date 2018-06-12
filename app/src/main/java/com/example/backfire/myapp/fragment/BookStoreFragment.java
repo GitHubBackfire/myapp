@@ -135,7 +135,8 @@ public class BookStoreFragment extends BaseFragment implements IBookFragment, Vi
             year = calendar.get(Calendar.YEAR);
             month = calendar.get(Calendar.MONTH);
         }else{
-            return "2018/1";
+            year = 2018;
+            month = 1;
         }
         return year+"/"+month;
     }

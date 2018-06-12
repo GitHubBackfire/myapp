@@ -12,6 +12,12 @@ android {
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
+    //I don't know why.
+    packagingOptions {
+        exclude 'META-INF/LICENSE'
+        exclude 'META-INF/NOTICE'
+    }
+
     buildTypes {
         release {
             minifyEnabled false
@@ -45,4 +51,6 @@ dependencies {
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
     testCompile 'junit:junit:4.12'
     apt 'com.jakewharton:butterknife-compiler:8.8.1'
+    compile files('libs/slf4j-android-1.6.1-RC1.jar')
+    compile files('libs/epublib-core-latest.jar')
 }

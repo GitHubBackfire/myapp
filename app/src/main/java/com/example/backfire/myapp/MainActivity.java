@@ -16,6 +16,8 @@ import com.example.backfire.myapp.fragment.BookFragment;
 import com.example.backfire.myapp.fragment.DownloadFragment;
 import com.example.backfire.myapp.fragment.FilmFragment;
 import com.example.backfire.myapp.fragment.ReviewLogFragment;
+import com.example.backfire.myapp.utils.FileUtil;
+import com.example.backfire.myapp.utils.PermissonUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,7 +43,10 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         }
+        PermissonUtil.verifyStoragePermissions(this);
     }
+
+
 
 
     private void initTab() {
