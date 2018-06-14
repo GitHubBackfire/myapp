@@ -57,7 +57,7 @@ public class BookStoreFragment extends BaseFragment implements IBookFragment, Vi
     private boolean loading;
 
     private int currentPage = 1;
-    private String currentDate = "2017/11";
+    private String currentDate;
     private String currentTag;
     private String currentCategory;
 
@@ -122,11 +122,11 @@ public class BookStoreFragment extends BaseFragment implements IBookFragment, Vi
         initialView();
         loadButtonDate();
         getCurrentDate();
-        loadDateData(getCurrentDate());
+        loadDateData(currentDate);
 
     }
 
-    private String getCurrentDate(){
+    private void getCurrentDate(){
         int year;
         int month;
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
@@ -138,7 +138,7 @@ public class BookStoreFragment extends BaseFragment implements IBookFragment, Vi
             year = 2018;
             month = 1;
         }
-        return year+"/"+month;
+        currentDate = year+"/"+month;
     }
 
 

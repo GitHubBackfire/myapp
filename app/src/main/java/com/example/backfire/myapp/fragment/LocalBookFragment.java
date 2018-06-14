@@ -14,14 +14,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import com.example.backfire.myapp.MainActivity;
 import com.example.backfire.myapp.R;
 import com.example.backfire.myapp.adapter.BookStoreAdapter;
 import com.example.backfire.myapp.bean.BookBean;
-import com.example.backfire.myapp.bean.EpubBook;
 import com.example.backfire.myapp.utils.DensityUtil;
 import com.example.backfire.myapp.utils.FileUtil;
 import com.example.backfire.myapp.utils.StaticUtil;
+import com.example.backfire.myapp.utils.StringUtil;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -29,17 +28,23 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import nl.siegmann.epublib.domain.Book;
+import nl.siegmann.epublib.domain.Resource;
+import nl.siegmann.epublib.domain.Spine;
+import nl.siegmann.epublib.domain.SpineReference;
 import nl.siegmann.epublib.epub.EpubReader;
 
 /**
- * Created by backfire on 2017/11/24.
+ * just test open epub book...
+ * Created by backfire on 2018/6/12
+ *
  */
 
-public class DownloadBookFragment extends BaseFragment{
+public class LocalBookFragment extends BaseFragment{
     private View view;
     @BindView(R.id.recycle_local)
     RecyclerView recyclerLocal;
@@ -64,8 +69,9 @@ public class DownloadBookFragment extends BaseFragment{
         super.onViewCreated(view, savedInstanceState);
         initalData();
         createLocalEpubBookFile();
-        getLocalEpubBooks();
         //queryLocalFile();
+        getLocalEpubBooks();
+
     }
 
     private void createLocalEpubBookFile() {
@@ -110,7 +116,9 @@ public class DownloadBookFragment extends BaseFragment{
     }
 
 
-
+    /**
+     * 耗时方法
+     */
     private void queryLocalFile() {
         String[] projection = new String[]{MediaStore.Files.FileColumns._ID,
                 MediaStore.Files.FileColumns.DATA,
@@ -132,7 +140,8 @@ public class DownloadBookFragment extends BaseFragment{
             do {
                 String path = cursor.getString(dataindex);
                 int dot = path.lastIndexOf("/");
-                String name = path.substring(dot + 1);
+                int dotEnd = path.lastIndexOf(".");
+                String name = path.substring(dot + 1,dotEnd)+".zip";
                 boolean isCopy = FileUtil.copyFile(new File(path),name);
                 Log.i("isCopy",isCopy+",");
             } while (cursor.moveToNext());
@@ -155,6 +164,7 @@ public class DownloadBookFragment extends BaseFragment{
             @Override
             public void onItemClick(View view, int position) {
                 //Open book or film ?
+                //unzipEpubBook(epubBooks.get(position).getUrl(),epubBooks.get(position).getTitle());
                 openEpubBook(epubBooks.get(position).getUrl());
             }
         });
@@ -167,6 +177,36 @@ public class DownloadBookFragment extends BaseFragment{
             EpubReader epubReader = new EpubReader();
             InputStream  inputStream = new FileInputStream(file);
             Book book = epubReader.readEpub(inputStream);
+            Spine spine = book.getSpine();
+
+            List<SpineReference> spineReferences = spine.getSpineReferences();
+            if(spineReferences != null && spineReferences.size() > 0){
+               /* Resource resource = spineReferences.get(1).getResource();
+                byte[] data = resource.getData();
+                String strHtml = StringUtil.bytes2Hex(data);
+                Log.i("spine",resource.getData().toString());
+                Log.i("spine2",strHtml);*/
+               for(SpineReference spineReference:spineReferences){
+                   byte[] data = spineReference.getResource().getData();
+                   String strHtml = StringUtil.bytes2Hex(data);
+               }
+            }
+
+            List<Resource> contents = book.getContents();
+            if (contents != null && contents.size() > 0) {
+                try {
+                    for(Resource resource:contents){
+                        InputStream inputStreamContent = resource.getInputStream();
+                        String str = StringUtil.convertStreamToString(inputStreamContent);
+                        Log.i("content",str);
+                    }
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            } else {
+            }
+
             Toast.makeText(getContext(),book.getTitle(),Toast.LENGTH_LONG).show();
         } catch (FileNotFoundException e) {
             e.printStackTrace();
@@ -174,6 +214,22 @@ public class DownloadBookFragment extends BaseFragment{
             e.printStackTrace();
         }
     }
+
+    private void unzipEpubBook(String path,String name){
+        String targetPath = FileUtil.getLocalBooksFilePath()+"/"+name;
+        FileUtil.singleZip(path,targetPath);
+        parseEpubBook(targetPath);
+    }
+
+
+    private void getSomething(List<Resource> contents){
+    }
+
+    private void parseEpubBook(String path){
+
+    }
+
+
 
 
 }

@@ -1,1 +1,2 @@
-include ':app', ':custom-view-module'
+include ':app', ':custom-view-module', ':BookPage-master-module'
+

@@ -20,7 +20,7 @@ import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.example.backfire.myapp.R;
-import com.example.backfire.myapp.utils.AppUtil;
+import com.example.backfire.myapp.utils.StringUtil;
 
 /**
  * Created by Carson_Ho on 17/8/10.
@@ -150,7 +150,7 @@ public class SearchView extends LinearLayout {
             public boolean onKey(View v, int keyCode, KeyEvent event) {
                 if (keyCode == KeyEvent.KEYCODE_ENTER && event.getAction() == KeyEvent.ACTION_DOWN) {
                     String bookName = etSearch.getText().toString();
-                    if(!AppUtil.isTextEmpty(bookName)){
+                    if(!StringUtil.isTextEmpty(bookName)){
                         if (!(mSearchViewListener == null)){
                             mSearchViewListener.searchAction(bookName);
                         }

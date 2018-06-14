@@ -2,7 +2,6 @@ package com.example.backfire.myapp;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTabHost;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,12 +10,12 @@ import android.widget.LinearLayout;
 import android.widget.TabHost;
 import android.widget.TextView;
 
+import com.example.backfire.myapp.activity.BaseActivity;
 import com.example.backfire.myapp.bean.Tab;
 import com.example.backfire.myapp.fragment.BookFragment;
 import com.example.backfire.myapp.fragment.DownloadFragment;
 import com.example.backfire.myapp.fragment.FilmFragment;
 import com.example.backfire.myapp.fragment.ReviewLogFragment;
-import com.example.backfire.myapp.utils.FileUtil;
 import com.example.backfire.myapp.utils.PermissonUtil;
 
 import java.util.ArrayList;
@@ -24,7 +23,7 @@ import java.util.List;
 
 
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends BaseActivity {
     private LayoutInflater mInflater;
     private FragmentTabHost mTabHost;
     private Fragment mFragment;

@@ -15,7 +15,6 @@ import com.example.backfire.myapp.R;
 import com.example.backfire.myapp.adapter.ViewPageAdapter;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -49,11 +48,13 @@ public class BookFragment extends BaseFragment {
     }
 
     private void initViewPager() {
-        String[] titles =new String[]{"书屋","科幻"};
+        String[] titles =new String[]{"书架","书屋","科幻"};
         ArrayList<Fragment> fragments = new ArrayList<>();
+        fragments.add(new LocalBookFragment());
         fragments.add(new BookStoreFragment());
         fragments.add(new FictionReaderFragment());
         viewPageAdapter = new ViewPageAdapter(getChildFragmentManager(),titles,fragments);
+        viewPager.setOffscreenPageLimit(2);
         viewPager.setAdapter(viewPageAdapter);
         tabLayout.setupWithViewPager(viewPager);
         one = tabLayout.getTabAt(0);

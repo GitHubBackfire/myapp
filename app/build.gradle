@@ -53,4 +53,5 @@ dependencies {
     apt 'com.jakewharton:butterknife-compiler:8.8.1'
     compile files('libs/slf4j-android-1.6.1-RC1.jar')
     compile files('libs/epublib-core-latest.jar')
+    compile project(':BookPage-master-module')
 }

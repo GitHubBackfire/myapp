@@ -15,7 +15,6 @@ import com.example.backfire.myapp.R;
 import com.example.backfire.myapp.adapter.ViewPageAdapter;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -48,15 +47,15 @@ public class DownloadFragment extends BaseFragment {
     }
 
     private void initViewPager() {
-        String[] mTitles = new String[]{"书籍", "电影"};
+/*        String[] mTitles = new String[]{"书籍", "电影"};
         ArrayList<Fragment> fragments = new ArrayList<>();
-        fragments.add(new DownloadBookFragment());
-        fragments.add(new DownloadFilmFragment());
+        fragments.add(new LocalBookFragment());
+        fragments.add(new LocalFilmFragment());
         viewPageAdapter = new ViewPageAdapter(getChildFragmentManager(),mTitles,fragments);
         viewPager.setAdapter(viewPageAdapter);
         tabLayout.setupWithViewPager(viewPager);
         one = tabLayout.getTabAt(0);
-        two = tabLayout.getTabAt(1);
+        two = tabLayout.getTabAt(1);*/
 
     }
 

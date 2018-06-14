@@ -14,7 +14,7 @@ import butterknife.ButterKnife;
  * Created by backfire on 2017/11/24.
  */
 
-public class DownloadFilmFragment extends BaseFragment {
+public class LocalFilmFragment extends BaseFragment {
     private View view;
     @Nullable
     @Override
