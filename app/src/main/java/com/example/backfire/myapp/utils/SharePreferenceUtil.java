@@ -24,8 +24,6 @@ public class SharePreferenceUtil {
         return sharedPreferences.getInt(NetworkTraffic,-1);
     }
     public static void putNetworkTraffic(Context context,int t) {
-        Log.i("isSave",t+".");
-
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putInt(NetworkTraffic, t);

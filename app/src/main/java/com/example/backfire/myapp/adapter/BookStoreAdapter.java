@@ -43,6 +43,8 @@ public class BookStoreAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     private MyOnItemClickListener myOnItemClickListener;
     private MyOnItemLongClickListener myOnItemLongClickListener;
 
+
+
     public void setMyOnItemClickListener(MyOnItemClickListener listener) {
         myOnItemClickListener = listener;
     }

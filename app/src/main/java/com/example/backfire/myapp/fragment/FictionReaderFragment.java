@@ -7,7 +7,6 @@ import android.support.annotation.Nullable;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,9 +16,9 @@ import com.example.backfire.myapp.activity.TextDetailActivity;
 import com.example.backfire.myapp.adapter.BookStoreAdapter;
 import com.example.backfire.myapp.bean.BookBean;
 import com.example.backfire.myapp.bean.DateBean;
-import com.example.backfire.myapp.presenter.implPresenter.FictionPresenterlmpl;
+import com.example.backfire.myapp.presenter.implPresenter.FictionPresenterImpl;
 import com.example.backfire.myapp.presenter.implView.IBookFragment;
-import com.example.backfire.myapp.utils.DensityUtil;
+import com.example.backfire.myapp.utils.ScreenUtil;
 import com.example.backfire.myapp.utils.StaticUtil;
 
 import java.util.ArrayList;
@@ -34,7 +33,7 @@ import butterknife.ButterKnife;
 
 public class FictionReaderFragment extends BaseFragment implements IBookFragment {
     private View view;
-    private FictionPresenterlmpl fictionPresenterlmpl;
+    private FictionPresenterImpl fictionPresenterlmpl;
     private BookStoreAdapter fictionAdapter;
     private RecyclerView.OnScrollListener loadingMoreListener;
     private ConnectivityManager.NetworkCallback connectivityCallback;
@@ -65,8 +64,8 @@ public class FictionReaderFragment extends BaseFragment implements IBookFragment
     }
 
     private void initialDate() {
-        fictionPresenterlmpl = new FictionPresenterlmpl(getContext(), this);
-        int mImageWidth = (int) (DensityUtil.getDeviceInfo(getContext())[0] / (3.4f));
+        fictionPresenterlmpl = new FictionPresenterImpl(getContext(), this);
+        int mImageWidth = (int) (ScreenUtil.getDeviceInfo(getContext())[0] / (3.4f));
         int mImageHeigh = (int) (1.6 * mImageWidth);
         fictionAdapter = new BookStoreAdapter(getContext(),mImageWidth,mImageHeigh);
         fictionAdapter.setMyOnItemClickListener(new BookStoreAdapter.MyOnItemClickListener() {

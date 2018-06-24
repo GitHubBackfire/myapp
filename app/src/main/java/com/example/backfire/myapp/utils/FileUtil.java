@@ -44,19 +44,19 @@ public class FileUtil {
      * 创建本地目录
      */
     public static boolean createLocalFile(Context context, String fileName){
-        boolean result = false;
         if(isSdCardAvailable()){
             File sd = Environment.getExternalStorageDirectory();
             String path = sd.getAbsolutePath()+File.separator+fileName;
-            Log.i("createpath",path);
             File file = new File(path);
             if(!file.exists()){
-               return file.mkdir();
+                return file.mkdir();
+            }else{
+                return true;
             }
         }else{
             //sd卡不可用
         }
-        return  result;
+        return  false;
     }
 
     /**

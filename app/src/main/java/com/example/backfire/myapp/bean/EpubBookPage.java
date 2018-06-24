@@ -1,6 +1,9 @@
 package com.example.backfire.myapp.bean;
 
+import com.example.backfire.myapp.utils.ScreenUtil;
+
 import java.util.ArrayList;
+import java.util.Scanner;
 
 /**
  * 一个EpubBookItem表示一页
@@ -9,26 +12,21 @@ import java.util.ArrayList;
  */
 
 public class EpubBookPage {
+    public final static int PAGE_HEIGHT_PX = ScreenUtil.getScreenHeight();
     private ArrayList<EpubBookItem> epubBookItems;
-    public static final int
-            LABEL_CONTENTS = 0,
-            LABEL_TITLE = 1,
-            LABLE_SECTION = 2,
-            LABLE_PICTURE = 3;
-    private int page;
-    private int itemNum;
+    private int currentPage;
 
-    EpubBookPage(){}
+    public ArrayList<EpubBookItem> getEpubBookItems() {
+        return epubBookItems;
+    }
 
+    public EpubBookPage(int currentPage, ArrayList<EpubBookItem> epubBookItems){
+        this.currentPage = currentPage;
+        this.epubBookItems = epubBookItems;
+    }
 
-    class EpubBookItem {
-        private String text;
-        private int type;
-        public EpubBookItem(int type, String text){
-            this.type = type;
-            this.text = text;
-        }
-
+    public int getCurrentPage() {
+        return currentPage;
     }
 
 }

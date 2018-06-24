@@ -16,7 +16,10 @@ import com.example.backfire.myapp.fragment.BookFragment;
 import com.example.backfire.myapp.fragment.DownloadFragment;
 import com.example.backfire.myapp.fragment.FilmFragment;
 import com.example.backfire.myapp.fragment.ReviewLogFragment;
+import com.example.backfire.myapp.presenter.implView.ILocalBookFragment;
+import com.example.backfire.myapp.utils.FileUtil;
 import com.example.backfire.myapp.utils.PermissonUtil;
+import com.example.backfire.myapp.utils.StaticUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,6 +34,7 @@ public class MainActivity extends BaseActivity {
     private boolean isInitTab = false;
 
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,12 +46,19 @@ public class MainActivity extends BaseActivity {
                 }
             }
         }
+        initLocalBook();
         PermissonUtil.verifyStoragePermissions(this);
     }
 
+    private void initLocalBook() {
+        //初始化本地图书
+        createLocalEpubBookFile();
 
+    }
 
-
+    private void createLocalEpubBookFile() {
+        boolean isCreateLocalFile = FileUtil.createLocalFile(this, StaticUtil.LOCAL_BOOKS_FILE_NAME);
+    }
     private void initTab() {
         isInitTab = true;
         Tab tabBook = new Tab(R.string.tabBook,R.drawable.selector_book, BookFragment.class);

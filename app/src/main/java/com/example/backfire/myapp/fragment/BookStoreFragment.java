@@ -1,7 +1,6 @@
 package com.example.backfire.myapp.fragment;
 
 import android.content.Intent;
-import android.graphics.Canvas;
 import android.graphics.drawable.ColorDrawable;
 import android.icu.util.Calendar;
 import android.net.ConnectivityManager;
@@ -10,7 +9,6 @@ import android.support.annotation.Nullable;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.text.format.Time;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,9 +27,9 @@ import com.example.backfire.myapp.adapter.BookStoreAdapter;
 import com.example.backfire.myapp.adapter.ButtonsAdapter;
 import com.example.backfire.myapp.bean.BookBean;
 import com.example.backfire.myapp.bean.DateBean;
-import com.example.backfire.myapp.presenter.implPresenter.BookStorePresenterlmpl;
+import com.example.backfire.myapp.presenter.implPresenter.BookStorePresenterImpl;
 import com.example.backfire.myapp.presenter.implView.IBookFragment;
-import com.example.backfire.myapp.utils.DensityUtil;
+import com.example.backfire.myapp.utils.ScreenUtil;
 import com.example.backfire.myapp.utils.StaticUtil;
 
 import java.util.ArrayList;
@@ -39,7 +37,6 @@ import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import rx.internal.operators.OperatorScan;
 
 /**
  * Created by backfire on 2017/9/30.
@@ -48,7 +45,7 @@ import rx.internal.operators.OperatorScan;
 public class BookStoreFragment extends BaseFragment implements IBookFragment, View.OnClickListener {
 
     private View view;
-    private BookStorePresenterlmpl bookStorePresenterlmpl;
+    private BookStorePresenterImpl bookStorePresenterImpl;
     private BookStoreAdapter bookStoreAdapter;
     private LinearLayoutManager mLinearLayoutManager;
 
@@ -67,10 +64,6 @@ public class BookStoreFragment extends BaseFragment implements IBookFragment, Vi
     private int currentState = STATE_DATE;
 
     private boolean isInitTagButtons = false;
-
-    private String serarchYear;
-    private String searchMonth;
-
 
     @BindView(R.id.recycle_book)
     RecyclerView recyclerBook;
@@ -159,9 +152,9 @@ public class BookStoreFragment extends BaseFragment implements IBookFragment, Vi
     }
 
     private void initialDate() {
-        int mImageWidth = (int) (DensityUtil.getDeviceInfo(getContext())[0] / (3.4f));
+        int mImageWidth = (int) (ScreenUtil.getDeviceInfo(getContext())[0] / (3.4f));
         int mImageHeigh = (int) (1.6 * mImageWidth);
-        bookStorePresenterlmpl = new BookStorePresenterlmpl(getContext(), this);
+        bookStorePresenterImpl = new BookStorePresenterImpl(getContext(), this);
         bookStoreAdapter = new BookStoreAdapter(getContext(),mImageWidth,mImageHeigh);
         bookStoreAdapter.setMyOnItemClickListener(new BookStoreAdapter.MyOnItemClickListener() {
             @Override
@@ -268,7 +261,7 @@ public class BookStoreFragment extends BaseFragment implements IBookFragment, Vi
     private void loadSearchData(String bookName){
         if(bookStoreAdapter != null){
             bookStoreAdapter.deleteAllItems();
-            bookStorePresenterlmpl.getBookstoreData(bookName);
+            bookStorePresenterImpl.getBookstoreData(bookName);
         }
     }
 
@@ -276,7 +269,7 @@ public class BookStoreFragment extends BaseFragment implements IBookFragment, Vi
     private void loadDateData(String date) {
         if(bookStoreAdapter != null){
             bookStoreAdapter.deleteAllItems();
-            bookStorePresenterlmpl.getBookstoreData(date, currentPage);
+            bookStorePresenterImpl.getBookstoreData(date, currentPage);
         }
 
     }
@@ -284,7 +277,7 @@ public class BookStoreFragment extends BaseFragment implements IBookFragment, Vi
     private void loadTagData(String tag) {
         if(bookStoreAdapter != null){
             bookStoreAdapter.deleteAllItems();
-            bookStorePresenterlmpl.getTagData(tag,currentPage);
+            bookStorePresenterImpl.getTagData(tag,currentPage);
         }
     }
 
@@ -298,10 +291,10 @@ public class BookStoreFragment extends BaseFragment implements IBookFragment, Vi
         currentPage++;
         switch (currentState) {
             case STATE_DATE:
-                bookStorePresenterlmpl.getBookstoreData(currentDate,currentPage);
+                bookStorePresenterImpl.getBookstoreData(currentDate,currentPage);
                 break;
             case STATE_TAG:
-                bookStorePresenterlmpl.getTagData(currentTag,currentPage);
+                bookStorePresenterImpl.getTagData(currentTag,currentPage);
                 break;
             case STATE_CATEGORY:
                 break;
@@ -312,14 +305,14 @@ public class BookStoreFragment extends BaseFragment implements IBookFragment, Vi
     private void loadOtherData(String date) {
 
         currentPage = 1;
-        bookStorePresenterlmpl.getBookstoreData(date, currentPage);
+        bookStorePresenterImpl.getBookstoreData(date, currentPage);
     }
 
 
 
 
     private void loadButtonDate() {
-        bookStorePresenterlmpl.getButtonMessage("2017/11", 1);
+        bookStorePresenterImpl.getButtonMessage("2017/11", 1);
         if(!isInitTagButtons){
             initialTagButtons();
         }
@@ -439,7 +432,6 @@ public class BookStoreFragment extends BaseFragment implements IBookFragment, Vi
         popupButtons.setWidth(ViewGroup.LayoutParams.MATCH_PARENT);
         popupButtons.setHeight(ViewGroup.LayoutParams.WRAP_CONTENT);
         recyclerButtons = popupContainer.findViewById(R.id.recycler_buttons);
-
 
     }
 

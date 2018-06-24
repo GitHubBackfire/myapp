@@ -9,6 +9,8 @@ import android.util.DisplayMetrics;
 import android.view.Window;
 import android.view.WindowManager;
 
+import com.example.backfire.myapp.MyAppApplication;
+
 
 /**
  * Created by backfire on 2018/6/13.
@@ -41,6 +43,19 @@ public class ScreenUtil {
         return eScreenDensity;
     }
 
+    public static int[] getDeviceInfo(Context context) {
+        int[] deviceWidthHeight = new int[2];
+        if ((deviceWidthHeight[0] == 0) && (deviceWidthHeight[1] == 0)) {
+            DisplayMetrics metrics = new DisplayMetrics();
+            ((Activity) context).getWindowManager().getDefaultDisplay()
+                    .getMetrics(metrics);
+
+            deviceWidthHeight[0] = metrics.widthPixels;
+            deviceWidthHeight[1] = metrics.heightPixels;
+        }
+        return deviceWidthHeight;
+    }
+
     /**
      * 获取屏幕宽度
      *
@@ -55,8 +70,8 @@ public class ScreenUtil {
      *
      * @return
      */
-    public static int getScreenHeight(Context context) {
-        return context.getResources().getDisplayMetrics().heightPixels;
+    public static int getScreenHeight() {
+        return MyAppApplication.getmContext().getResources().getDisplayMetrics().heightPixels;
     }
 
     /**
@@ -65,12 +80,12 @@ public class ScreenUtil {
      * @param dp
      * @return
      */
-    public static float dpToPx(Context context, float dp) {
-        return dp * context.getResources().getDisplayMetrics().density;
+    public static float dpToPx(float dp) {
+        return dp * MyAppApplication.getmContext().getResources().getDisplayMetrics().density;
     }
 
-    public static int dpToPxInt(Context context, float dp) {
-        return (int) (dpToPx(context, dp) + 0.5f);
+    public static int dpToPxInt(float dp) {
+        return (int) (dpToPx( dp) + 0.5f);
     }
 
     /**
@@ -79,12 +94,12 @@ public class ScreenUtil {
      * @param px
      * @return
      */
-    public static float pxToDp(Context context, float px) {
-        return px / context.getResources().getDisplayMetrics().density;
+    public static float pxToDp(float px) {
+        return px / MyAppApplication.getmContext().getResources().getDisplayMetrics().density;
     }
 
     public static int pxToDpInt(Context context, float px) {
-        return (int) (pxToDp(context,px) + 0.5f);
+        return (int) (pxToDp(px) + 0.5f);
     }
 
     /**
@@ -93,8 +108,8 @@ public class ScreenUtil {
      * @param pxValue
      * @return
      */
-    public static float pxToSp(Context context, float pxValue) {
-        return pxValue / context.getResources().getDisplayMetrics().scaledDensity;
+    public static float pxToSp(float pxValue) {
+        return pxValue / MyAppApplication.getmContext().getResources().getDisplayMetrics().scaledDensity;
     }
 
     /**
@@ -103,8 +118,8 @@ public class ScreenUtil {
      * @param spValue
      * @return
      */
-    public static float spToPx(Context context, float spValue) {
-        return spValue * context.getResources().getDisplayMetrics().scaledDensity;
+    public static float spToPx(float spValue) {
+        return spValue * MyAppApplication.getmContext().getResources().getDisplayMetrics().scaledDensity;
     }
 
 

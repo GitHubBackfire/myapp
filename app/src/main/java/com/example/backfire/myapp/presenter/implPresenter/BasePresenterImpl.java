@@ -10,7 +10,7 @@ import rx.subscriptions.CompositeSubscription;
  * Created by backfire on 2017/9/19.
  */
 
-public class BasePresenterlmpl implements BasePresenter {
+public class BasePresenterImpl implements BasePresenter {
 
     private CompositeSubscription mCompositeSubscription;
 

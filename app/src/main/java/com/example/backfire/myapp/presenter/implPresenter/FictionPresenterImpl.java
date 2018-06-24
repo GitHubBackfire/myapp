@@ -1,11 +1,9 @@
 package com.example.backfire.myapp.presenter.implPresenter;
 
 import android.content.Context;
-import android.util.Log;
 
 import com.example.backfire.myapp.api.ApiManager;
 import com.example.backfire.myapp.bean.BookBean;
-import com.example.backfire.myapp.presenter.IBookstroePresenter;
 import com.example.backfire.myapp.presenter.IFictionPresenter;
 import com.example.backfire.myapp.presenter.implView.IBookFragment;
 import com.example.backfire.myapp.utils.StaticUtil;
@@ -16,7 +14,6 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import java.io.IOException;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -32,13 +29,13 @@ import rx.schedulers.Schedulers;
  * Created by backfire on 2017/10/1.
  */
 
-public class FictionPresenterlmpl extends BasePresenterlmpl implements IFictionPresenter {
+public class FictionPresenterImpl extends BasePresenterImpl implements IFictionPresenter {
     private IBookFragment iBookFragment;
     private ArrayList<BookBean> bookBeanList;
     private Context context;
 
 
-    public FictionPresenterlmpl(Context context, IBookFragment iBookFragment) {
+    public FictionPresenterImpl(Context context, IBookFragment iBookFragment) {
         this.context = context;
         this.iBookFragment = iBookFragment;
     }

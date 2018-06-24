@@ -10,7 +10,6 @@ import com.example.backfire.myapp.presenter.IBookstroePresenter;
 import com.example.backfire.myapp.presenter.implView.IBookFragment;
 import com.example.backfire.myapp.utils.StaticUtil;
 import org.jsoup.Jsoup;
-import org.jsoup.helper.StringUtil;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
@@ -27,11 +26,11 @@ import rx.schedulers.Schedulers;
  * Created by backfire on 2017/10/1.
  */
 
-public class BookStorePresenterlmpl extends BasePresenterlmpl implements IBookstroePresenter {
+public class BookStorePresenterImpl extends BasePresenterImpl implements IBookstroePresenter {
     private IBookFragment iBookFragment;
     private Context context;
 
-    public BookStorePresenterlmpl(Context context, IBookFragment iBookFragment) {
+    public BookStorePresenterImpl(Context context, IBookFragment iBookFragment) {
         this.context = context;
         this.iBookFragment = iBookFragment;
     }
@@ -83,6 +82,7 @@ public class BookStorePresenterlmpl extends BasePresenterlmpl implements IBookst
                 });
         addSubscription(subscription);
     }
+
 
     @Override
     public void getBookstoreData(String searchCondition) {

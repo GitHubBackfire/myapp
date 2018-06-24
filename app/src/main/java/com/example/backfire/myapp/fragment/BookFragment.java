@@ -59,7 +59,6 @@ public class BookFragment extends BaseFragment {
         tabLayout.setupWithViewPager(viewPager);
         one = tabLayout.getTabAt(0);
         two = tabLayout.getTabAt(1);
-
     }
 
     @Override

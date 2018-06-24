@@ -1,5 +1,6 @@
 package com.example.backfire.myapp.fragment;
 
+import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
@@ -12,31 +13,20 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
-
 import com.example.backfire.myapp.R;
+import com.example.backfire.myapp.activity.ReadBookActivity;
 import com.example.backfire.myapp.adapter.BookStoreAdapter;
 import com.example.backfire.myapp.bean.BookBean;
-import com.example.backfire.myapp.utils.DensityUtil;
+import com.example.backfire.myapp.presenter.implPresenter.LocalBookPresenterImlp;
+import com.example.backfire.myapp.presenter.implView.ILocalBookFragment;
 import com.example.backfire.myapp.utils.FileUtil;
+import com.example.backfire.myapp.utils.ScreenUtil;
 import com.example.backfire.myapp.utils.StaticUtil;
-import com.example.backfire.myapp.utils.StringUtil;
-
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
-import java.util.List;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import nl.siegmann.epublib.domain.Book;
-import nl.siegmann.epublib.domain.Resource;
-import nl.siegmann.epublib.domain.Spine;
-import nl.siegmann.epublib.domain.SpineReference;
-import nl.siegmann.epublib.epub.EpubReader;
+
 
 /**
  * just test open epub book...
@@ -44,15 +34,14 @@ import nl.siegmann.epublib.epub.EpubReader;
  *
  */
 
-public class LocalBookFragment extends BaseFragment{
+public class LocalBookFragment extends BaseFragment implements ILocalBookFragment{
     private View view;
     @BindView(R.id.recycle_local)
     RecyclerView recyclerLocal;
-
     private BookStoreAdapter bookStoreAdater;
     private LinearLayoutManager mLinearLayoutManager;
-
     private ArrayList<BookBean> epubBooks;
+    private LocalBookPresenterImlp localBookPresenterImlp;
 
 
     @Nullable
@@ -68,93 +57,18 @@ public class LocalBookFragment extends BaseFragment{
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         initalData();
-        createLocalEpubBookFile();
-        //queryLocalFile();
+
         getLocalEpubBooks();
-
-    }
-
-    private void createLocalEpubBookFile() {
-        boolean isCreateLocalFile = FileUtil.createLocalFile(getContext(), StaticUtil.LOCAL_BOOKS_FILE_NAME);
-        Log.i("iscreate",isCreateLocalFile+",");
-    }
-
-
-    private void getLocalEpubBooks(){
-        epubBooks = new ArrayList<>();
-        String[] projection = new String[]{MediaStore.Files.FileColumns._ID,
-                MediaStore.Files.FileColumns.DATA,
-                MediaStore.Files.FileColumns.SIZE
-        };
-        //查询本地epub文件
-        Cursor cursor = getContext().getContentResolver().query(
-                Uri.parse("content://media/external/file"),
-                projection,
-                MediaStore.Files.FileColumns.DATA + " not like ? and (" + MediaStore.Files.FileColumns.DATA + " like ? )",
-                new String[]{"%" + FileUtil.getLocalBooksFilePath() + "%",
-                        "%" + StaticUtil.SUFFIX_EPUB}, null);
-        if (cursor != null && cursor.moveToFirst()) {
-            int dataindex = cursor.getColumnIndex(MediaStore.Files.FileColumns.DATA);
-            do {
-                String path = cursor.getString(dataindex);
-                int dotStart = path.lastIndexOf("/");
-                int dotEnd = path.lastIndexOf(".");
-                String name = path.substring(dotStart + 1,dotEnd);
-                BookBean bookBean = new BookBean(name,path,"");
-                epubBooks.add(bookBean);
-                //show local epub books in ui.
-            } while (cursor.moveToNext());
-
-            cursor.close();
-
-        } else {
-
-        }
         if(epubBooks.size() >= 0){
             bookStoreAdater.addItems(epubBooks);
-        }
-    }
-
-
-    /**
-     * 耗时方法
-     */
-    private void queryLocalFile() {
-        String[] projection = new String[]{MediaStore.Files.FileColumns._ID,
-                MediaStore.Files.FileColumns.DATA,
-                MediaStore.Files.FileColumns.SIZE
-        };
-        //查询后缀为epub格式的文件
-        Cursor cursor = getContext().getContentResolver().query(
-                Uri.parse("content://media/external/file"),
-                projection,
-                MediaStore.Files.FileColumns.DATA + " not like ? and (" + MediaStore.Files.FileColumns.DATA + " like ? )",
-                new String[]{"%" + FileUtil.getLocalBooksFilePath() + "%",
-                        "%" + StaticUtil.SUFFIX_EPUB}, null);
-
-        if (cursor != null && cursor.moveToFirst()) {
-            int idindex = cursor.getColumnIndex(MediaStore.Files.FileColumns._ID);
-            int dataindex = cursor.getColumnIndex(MediaStore.Files.FileColumns.DATA);
-            int sizeindex = cursor.getColumnIndex(MediaStore.Files.FileColumns.SIZE);
-
-            do {
-                String path = cursor.getString(dataindex);
-                int dot = path.lastIndexOf("/");
-                int dotEnd = path.lastIndexOf(".");
-                String name = path.substring(dot + 1,dotEnd)+".zip";
-                boolean isCopy = FileUtil.copyFile(new File(path),name);
-                Log.i("isCopy",isCopy+",");
-            } while (cursor.moveToNext());
-
-            cursor.close();
-
-        } else {
-
+        }else{
+            localBookPresenterImlp = new LocalBookPresenterImlp(getContext(),this);
+            localBookPresenterImlp.copyEpubBooks();
         }
     }
 
     private void initalData() {
-        int mImageWidth = (int) (DensityUtil.getDeviceInfo(getContext())[0] / (3.4f));
+        int mImageWidth = (int) (ScreenUtil.getDeviceInfo(getContext())[0] / (3.4f));
         int mImageHeigh = (int) (1.6 * mImageWidth);
         bookStoreAdater = new BookStoreAdapter(getContext(),mImageWidth,mImageHeigh);
         mLinearLayoutManager = new GridLayoutManager(getActivity(), 3);
@@ -163,73 +77,39 @@ public class LocalBookFragment extends BaseFragment{
         bookStoreAdater.setMyOnItemClickListener(new BookStoreAdapter.MyOnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
-                //Open book or film ?
-                //unzipEpubBook(epubBooks.get(position).getUrl(),epubBooks.get(position).getTitle());
-                openEpubBook(epubBooks.get(position).getUrl());
+                Intent intent = new Intent(getContext(), ReadBookActivity.class);
+                intent.putExtra(StaticUtil.LOCAL_BOOKS_FILE_NAME, epubBooks.get(position).getUrl());
+                startActivity(intent);
             }
         });
     }
 
-    private void openEpubBook(String path){
-        Log.i("path1",path);
-        File file = new File(path);
-        try {
-            EpubReader epubReader = new EpubReader();
-            InputStream  inputStream = new FileInputStream(file);
-            Book book = epubReader.readEpub(inputStream);
-            Spine spine = book.getSpine();
-
-            List<SpineReference> spineReferences = spine.getSpineReferences();
-            if(spineReferences != null && spineReferences.size() > 0){
-               /* Resource resource = spineReferences.get(1).getResource();
-                byte[] data = resource.getData();
-                String strHtml = StringUtil.bytes2Hex(data);
-                Log.i("spine",resource.getData().toString());
-                Log.i("spine2",strHtml);*/
-               for(SpineReference spineReference:spineReferences){
-                   byte[] data = spineReference.getResource().getData();
-                   String strHtml = StringUtil.bytes2Hex(data);
-               }
-            }
-
-            List<Resource> contents = book.getContents();
-            if (contents != null && contents.size() > 0) {
-                try {
-                    for(Resource resource:contents){
-                        InputStream inputStreamContent = resource.getInputStream();
-                        String str = StringUtil.convertStreamToString(inputStreamContent);
-                        Log.i("content",str);
-                    }
-
-                } catch (IOException e) {
-                    e.printStackTrace();
+    private void getLocalEpubBooks(){
+        epubBooks = new ArrayList<>();
+        File localBooksFile = new File(FileUtil.getLocalBooksFilePath());
+        if(localBooksFile.exists() && localBooksFile.isDirectory()){
+            for(File file : localBooksFile.listFiles()){
+                String type = file.getName().substring(file.getName().lastIndexOf(".")+1, file.getName().length());
+                if(type.equals("epub")){
+                    String bookPath = file.getAbsolutePath();
+                    String bookName = bookPath.substring(bookPath.lastIndexOf("/")+1, bookPath.lastIndexOf("."));
+                    BookBean bookBean = new BookBean(bookName,bookPath,"");
+                    epubBooks.add(bookBean);
                 }
-            } else {
             }
+        }
 
-            Toast.makeText(getContext(),book.getTitle(),Toast.LENGTH_LONG).show();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
+    }
+
+    @Override
+    public void updataList(boolean isSuccess) {
+        if(isSuccess){
+            getLocalEpubBooks();
+            if(epubBooks.size() >= 0){
+                bookStoreAdater.addItems(epubBooks);
+            }else{
+                //无本地epub文件
+            }
         }
     }
-
-    private void unzipEpubBook(String path,String name){
-        String targetPath = FileUtil.getLocalBooksFilePath()+"/"+name;
-        FileUtil.singleZip(path,targetPath);
-        parseEpubBook(targetPath);
-    }
-
-
-    private void getSomething(List<Resource> contents){
-    }
-
-    private void parseEpubBook(String path){
-
-    }
-
-
-
-
 }

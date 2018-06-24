@@ -4,47 +4,31 @@ import android.content.Context;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.annotation.Nullable;
-import android.support.design.widget.NavigationView;
 import android.util.Log;
-import android.view.View;
-import android.widget.FrameLayout;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
-import android.widget.Toast;
 
 import com.example.backfire.myapp.R;
 import com.example.backfire.myapp.bean.BookBean;
 import com.example.backfire.myapp.bean.DateBean;
-import com.example.backfire.myapp.presenter.IBookstroePresenter;
-import com.example.backfire.myapp.presenter.implPresenter.FictionPresenterlmpl;
+import com.example.backfire.myapp.presenter.implPresenter.FictionPresenterImpl;
 import com.example.backfire.myapp.presenter.implView.IBookFragment;
-import com.example.backfire.myapp.presenter.implView.IFictionDetailActivity;
 import com.example.backfire.myapp.utils.StaticUtil;
 
-import org.jsoup.nodes.Document;
-
 import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.io.FileWriter;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.OutputStream;
 import java.io.OutputStreamWriter;
-import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 
 /**
  * Created by backfire on 2017/11/21.
@@ -58,7 +42,7 @@ public class TextDetailActivity extends BaseActivity implements IBookFragment {
     private SimpleAdapter adapter;
     private String textUrl;
     private String textTitle;
-    private FictionPresenterlmpl fictionPresenterlmpl;
+    private FictionPresenterImpl fictionPresenterlmpl;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -77,7 +61,7 @@ public class TextDetailActivity extends BaseActivity implements IBookFragment {
     private void initData() {
         textUrl = getIntent().getStringExtra(StaticUtil.TEXT_DETAIL_URL);
         textTitle = getIntent().getStringExtra(StaticUtil.TEXT_TITLE);
-        fictionPresenterlmpl = new FictionPresenterlmpl(this, this);
+        fictionPresenterlmpl = new FictionPresenterImpl(this, this);
 
     }
 

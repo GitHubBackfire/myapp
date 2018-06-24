@@ -29,10 +29,9 @@
     <!--text size-->
     <dimen name="tab_text_size">14sp</dimen>
     <dimen name="book_title_size">14sp</dimen>
-    <dimen name="choose_text_size">14dp</dimen>
+    <dimen name="choose_text_size">14sp</dimen>
 
     <dimen name="tablayout_height">40dp</dimen>
-
     <dimen name="item_height">60dp</dimen>
     <dimen name="item_right_icon">36dp</dimen>
 

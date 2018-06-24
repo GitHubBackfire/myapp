@@ -46,5 +46,8 @@ public class StaticUtil {
     public static final String SUFFIX_EPUB = ".epub";
     public static final String LOCAL_BOOKS_FILE_NAME = "myappEpubBooks";
 
+    //key
+    public static final String LOCAL_PATH_KEY = "LOCAL_PATH_KEY";
+
 
 }
